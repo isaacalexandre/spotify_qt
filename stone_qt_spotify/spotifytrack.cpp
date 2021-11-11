@@ -39,7 +39,7 @@ void SpotifyTrack::SearchTrack(QString str)
 
     QNetworkReply * aux_reply = p_oauth2->get(QUrl(Constants::SPOTIFY_TRACK_SEARCH.arg(str)));
     connect(aux_reply, &QNetworkReply::finished, [=]() {
-        qsizetype items_len = 0;
+        QJsonArray::iterator it;
         aux_reply->deleteLater();
 
         if (aux_reply->error() == QNetworkReply::NoError) {
@@ -54,13 +54,11 @@ void SpotifyTrack::SearchTrack(QString str)
             //Verify if is a array and put to the variable
             Q_ASSERT(tracks_json.value("items").isArray());
             QJsonArray items = tracks_json.value("items").toArray();
-            //Get size of items
-            items_len = items.size();
 
             //Populate the vector
-            for(int i = 0; i < items_len; i++){
+            for(it = items.begin(); it != items.end(); it++){
                 TrackStruct ts_aux;
-                QJsonObject track_selec = items.at(i).toObject();
+                QJsonObject track_selec = it->toObject();
                 ts_aux.name = track_selec.value("name").toString();
                 ts_aux.url_sample = track_selec.value("preview_url").toString();
                 ts_aux.id_track = track_selec.value("id").toString();
