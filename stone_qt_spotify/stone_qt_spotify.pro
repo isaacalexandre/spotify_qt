@@ -11,12 +11,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     networkaccessmanager.cpp \
+    spotifytrack.cpp \
     spotifywrapper.cpp
 
 HEADERS += \
     constants.h \
     mainwindow.h \
     networkaccessmanager.h \
+    spotifytrack.h \
     spotifywrapper.h
 
 FORMS += \
